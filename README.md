@@ -1,4 +1,4 @@
-<hr width='500' color='111111' noshade align='center' />
+<hr width='1000' color='111111' noshade align='center' />
 
 <div align='center'>
   
@@ -10,7 +10,7 @@
    
 </div>
 
-<hr width='500' color='111111' noshade align='center' />
+<hr width='1000' color='111111' noshade align='center' />
 
 <h4>🚀 앞으로 개선해야 할 것 🚀</h4>
 
