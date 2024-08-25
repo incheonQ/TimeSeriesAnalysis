@@ -1,7 +1,7 @@
 <strong>Reference : 권오경, 『공급사슬관리』, 박영사(2010), p125-132</strong>
 
 <h4>Notion Pages</h4>
-  
+
   ❇️ [Notion-Excel](https://www.notion.so/Excel-147b6add77c04639b631771a9ff1e517)
   
   ❇️ [Notion-Python](https://www.notion.so/Python-a85ce17aaef44c3b87a6aad8ac5db2bc)
