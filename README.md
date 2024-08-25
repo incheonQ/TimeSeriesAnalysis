@@ -1,3 +1,5 @@
+<hr width='1000' color='111111' noshade align='center' />
+
 <div align='center'>
   <h4>➡️ Notion Pages ⬅️</h4>
   
