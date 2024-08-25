@@ -20,6 +20,7 @@
 
   [ ] 선형 프로그래밍으로 최적해 구하기 [Linear Programming](https://towardsdatascience.com/linear-programming-the-stock-cutting-problem-dc6ba3bf3de1)
 
+<hr width='1000' color='111111' noshade align='center' />
 
 <strong>Reference : 권오경, 『공급사슬관리』, 박영사(2010), p125-132</strong>
 
