@@ -7,7 +7,7 @@
    
 </div>
 
-<hr width='150' color='111111' noshade />
+<hr width='1000' color='111111' noshade align='center' />
 
 <h4>🚀 앞으로 개선해야 할 것 🚀</h4>
 
