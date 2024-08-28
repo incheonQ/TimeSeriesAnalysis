@@ -1,0 +1,3 @@
+1. [PCU3359133591.csv](https://fred.stlouisfed.org/series/PCU3359133591)
+2. [power_usage_2016_to_2020.csv](https://www.kaggle.com/datasets/srinuti/residential-power-usage-3years-data-timeseries?resource=download)
+3. [weather_2016_2020_daily.csv](https://www.kaggle.com/datasets/srinuti/residential-power-usage-3years-data-timeseries?resource=download)
