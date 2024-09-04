@@ -1,5 +1,11 @@
 from collections.abc import Sequence
+import numpy as np
+import pandas as pd
+import math
 
+# 이동 평균법은 시계열 데이터의 단기 변동을 smoothing하여 장기적인 추세를 파악하는 데 사용됩니다.
+# 장점: 간단하고 이해하기 쉬우며, 노이즈를 효과적으로 제거할 수 있습니다.
+# 단점: 급격한 변화에 대한 반응이 느리고, 최근 데이터와 과거 데이터에 동일한 가중치를 부여합니다(SMA의 경우).
 def moving_average_methods(
     data: Sequence[float], window_size: int
 )->list[float | None]:
@@ -21,6 +27,9 @@ def moving_average_methods(
             levels.append(level_value)
     return levels
 
+# 지수 평활법은 최근 데이터에 더 높은 가중치를 부여하여 시계열을 평활화하는 방법입니다.
+# 장점: 최근 데이터에 더 많은 중요성을 부여하며, 적은 데이터로도 예측이 가능합니다.
+# 단점: 적절한 평활 상수를 선택하는 것이 중요하며, 장기 예측에는 부적합할 수 있습니다.
 def exponential_smoothing_methods(
     data: Sequence[float], alpha: float = None
 )-> list[float]:
@@ -40,6 +49,7 @@ def exponential_smoothing_methods(
 
     return levels
 
+# 단순선형회귀 회귀계수 b0, b1 
 def betas(data):
     Xbar = sum(range(len(data)+1))/len(data)
     Ybar = sum(data)/len(data)
@@ -55,6 +65,29 @@ def betas(data):
     b0 = Ybar - b1 * Xbar
     return b0, b1
 
+# 단순선형회귀 회귀계수 b0, b1 
+def b1b0(
+    x: np.ndarray,
+    y: np.ndarray,
+)->list[float, float]:
+
+    x_bar = x.mean()
+    y_bar = y.mean()
+
+    upper_base = np.sum((x - x_bar)*(y - y_bar))
+
+    lower_base = np.sum((x-x_bar)*(x-x_bar))
+
+    b1 = upper_base / lower_base
+
+    b0 = y_bar - b1*x_bar
+
+    return [b1, b0]
+
+# 홀트 모델은 단순 지수평활법을 확장한 것으로, 
+# 추세(trend)를 가진 시계열 데이터를 예측하는 데 사용됩니다. 이 모델은 두 가지 구성요소를 고려합니다:
+# 수준(level): 시계열의 현재 값
+# 추세(trend): 시계열의 장기적인 증가 또는 감소 경향
 def holt_model(
     data: Sequence[float], 
     alpha: float, 
@@ -82,6 +115,12 @@ def holt_model(
 
     return forecasts
 
+# 윈터스 모델 (Winters Model):
+# 윈터스 모델은 홀트 모델을 더욱 확장한 것으로, 
+# 추세와 계절성(seasonality)을 모두 가진 시계열 데이터를 예측하는 데 사용됩니다. 이 모델은 세 가지 구성요소를 고려합니다:
+# 수준(level)
+# 추세(trend)
+# 계절성(seasonality): 시계열의 주기적인 변동 패턴
 def winters_model(
     data: Sequence[float],
     P: int,
@@ -138,7 +177,87 @@ def winters_model(
         forecasts.append(forecast_value)
 
     return forecasts
-        
+
+# ARIMA
+# SARIMA
+# ARIMAX
+# ARCH
+# GARCH
+# State Space Models
+# VAR (Vector AutoRegression)
+# Prophet
+# TBATS (Trigonometric, Box-Cox transform, ARMA errors, Trend and Seasonal components)
+# Random Forest
+# Support Vector Machine
+# LSTM
+# GRU
+# TCN
+# TFT (Temporal Fusion Transformers)
+# Informer
+# LogTrans
+# N-BEATS
+# DeepAR
+# WaveNet
+# LightGBM, XGBoost
+# Random Forest
+
+
+
+
+# 파레토 법칙
+# 전체 결과의 80%가 전체 원인의 20%에서 일어나는 현상
+def pareto_rules(
+        series: pd.Series,
+        threshold: float = 0.8,
+        )->bool:
+
+    if type(series) != object:
+        series = series.apply(lambda x: str(x))
+    
+    counts = series.value_counts(normalize=True).sort_values(ascending=False)
+
+    cumsum = counts.cumsum()
+
+    index = math.ceil(len(counts) * 0.2)
+
+    value = cumsum.iloc[index-1]
+
+    if value >= threshold:
+        return 1
+    else:
+        return 0
+
+
+# 소매포화지수 IRS: Index of Retail Saturation
+# 소매포화지수 공식: [지역지상의 총가구수 x 가구당 특정 업태에 대한 지출액] / 특정 업태에 대한 총매장 면적
+# 값이 클수록 공급보다 수요가 많다는 것을 의미한다.
+def irs(
+    households: float,
+    demand_per_household: float,
+    total_area_of_stores: float,
+)->float:
+    
+    # 잠재수요
+    potential_demand = households * demand_per_household
+
+    return potential_demand / total_area_of_stores
+
+
+
+# 구매력지수 BPI: Buying Power Index
+# 구매력지수 공식: (인구비 * 0.2) + (소매 매출액 비 * 0.3) + (유효 구매 소득비 * 0.5)
+# 보편적인 가격으로 판매되는 대중 상품의 구매력을 추정하는 경우에는 BPI의 유용성은 높다.
+# 하지만, 상품의 성격이 대중 시장을부터 멀수록 보다 많은 차별요소(소득, 계층, 연령, 성별 등)을 가지고 BPI를 수정하여야 한다.
+def bpi(
+    population_ratio: float,
+    retail_sales_ratio: float,
+    effective_income_ratio: float,
+    weight_population_ratio: float = 0.2,
+    weight_retail_sales_ratio: float = 0.3,
+    weight_effective_income_ratio: float = 0.5,
+)->float:
+    return (population_ratio * weight_population_ratio) + (retail_sales_ratio * weight_retail_sales_ratio) + (effective_income_ratio * weight_effective_income_ratio)
+
     
 
     
